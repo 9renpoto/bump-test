@@ -1,0 +1,10 @@
+{
+  "name": "bump-test",
+  "version": "1.0.0",
+  "description": "This is an example file with default selections.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true
+}

@@ -1,0 +1,35 @@
+name: Bump version
+
+on:
+  workflow_dispatch:
+    inputs:
+      semver:
+        description: 'Which SemVer'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+  workflow_call:
+    inputs:
+      semver:
+        description: The image_name to build for.
+        required: true
+        type: string
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - run: npm version ${{ inputs.semver }} --no-git-tag-version --workspaces
+
+      - run: |
+          echo '1' $GITHUB_REF
+          echo '2' ${{ github.ref }}
+          echo '3' ${{ github.ref_name }}
+          echo '4' ${{ github.head_ref }}
+          echo '5' ${{ github.base_ref }}
+
