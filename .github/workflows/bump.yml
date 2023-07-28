@@ -23,6 +23,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
 
       - run: npm version ${{ inputs.semver }} --no-git-tag-version
       - name: generate new version and save to env variable
