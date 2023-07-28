@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - run: npm version ${{ inputs.semver }} --no-git-tag-version --workspaces
+      - run: npm version ${{ inputs.semver }} --no-git-tag-version
 
       - run: |
           echo '1' $GITHUB_REF
