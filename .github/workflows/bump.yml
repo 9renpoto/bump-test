@@ -40,8 +40,8 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5.0.2
         with:
-          base: main
-          branch: release
+          base: ${{ github.ref }}
+          branch: ${{ github.ref_name }}-${{ steps.get_version.outputs.NEW_VERSION }}
           commit-message: 'bump: v${{ steps.get_version.outputs.NEW_VERSION }}'
           body: ${{ steps.get_release_note.outputs.result  }}
           title: 'chore: bump v${{ steps.get_version.outputs.NEW_VERSION }}'
