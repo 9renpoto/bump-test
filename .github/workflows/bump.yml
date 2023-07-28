@@ -25,6 +25,10 @@ jobs:
       - uses: actions/checkout@v3
 
       - run: npm version ${{ inputs.semver }} --no-git-tag-version
+      - name: generate new version and save to env variable
+        id: get_version
+        run: |
+          echo "NEW_VERSION=$(cat package.json | jq -r .version)" >> $GITHUB_OUTPUT
 
       - run: |
           echo '1' $GITHUB_REF
@@ -33,3 +37,13 @@ jobs:
           echo '4' ${{ github.head_ref }}
           echo '5' ${{ github.base_ref }}
 
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5.0.2
+        with:
+          base: main
+          branch: release
+          commit-message: 'bump: v${{ steps.get_version.outputs.NEW_VERSION }}'
+          body: ${{ steps.get_release_note.outputs.result  }}
+          title: 'chore: bump v${{ steps.get_version.outputs.NEW_VERSION }}'
+          draft: true
+          milestone: 'v${{ steps.get_version.outputs.NEW_VERSION }}'
